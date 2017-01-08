@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UICollectionViewController {
+class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +26,13 @@ class ViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return collectionView.dequeueReusableCell(withReuseIdentifier: "cellID", for: indexPath)
+        let sampleToDoCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellID", for: indexPath) as! ToDoCell
+        sampleToDoCell.nameLabel.text = "Sample Task \(indexPath.item + 1)"
+        return sampleToDoCell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: 50)
     }
 
 }
@@ -41,8 +47,21 @@ class ToDoCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    let nameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Sample Task"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        return label
+    }()
+    
     func setUpViews() {
+        addSubview(nameLabel)
         
+        // add horizontal constraints to label
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-8-[v0]-8-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
+        // add vertical constraints
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-8-[v0]-8-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": nameLabel]))
     }
 }
 
