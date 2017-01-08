@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "12DE93897BC30D4952084F29821976538DDEE77B",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "6E1E5AA360B088F8B27C23483EF3102F381337E3" : 9223372036854775807,
+    "12DE93897BC30D4952084F29821976538DDEE77B" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "421AE529-FBDB-4D12-A85E-52374FAA1583",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "6E1E5AA360B088F8B27C23483EF3102F381337E3" : "",
+    "12DE93897BC30D4952084F29821976538DDEE77B" : "ToDoList\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "ToDoList",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ToDoList\/ToDoList.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/seabjackson\/ToDoList.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "12DE93897BC30D4952084F29821976538DDEE77B"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/seabjackson\/CookieCrush-Game.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6E1E5AA360B088F8B27C23483EF3102F381337E3"
+    }
+  ]
+}
