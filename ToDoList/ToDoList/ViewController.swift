@@ -22,14 +22,16 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         // register the collectionView header
         collectionView?.register(ToDoHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "headerID")
     }
+    
+    var tasks = ["Buy Groceries", "Pay Phone Bill", "Learn to Code"]
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return tasks.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let sampleToDoCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellID", for: indexPath) as! ToDoCell
-        sampleToDoCell.nameLabel.text = "Sample Task \(indexPath.item + 1)"
+        sampleToDoCell.nameLabel.text = tasks[indexPath.item]
         return sampleToDoCell
     }
     
@@ -38,11 +40,18 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerID", for: indexPath)
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerID", for: indexPath) as! ToDoHeader
+        header.viewController = self
+        return header
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: view.frame.width, height: 100)
+    }
+    
+    func addNewTask(taskName: String) {
+        tasks.append(taskName)
+        collectionView?.reloadData()
     }
 
 }
@@ -87,6 +96,8 @@ class ToDoCell: BaseCell {
 
 class ToDoHeader: BaseCell {
     
+    var viewController: ViewController?
+    
     let toDoTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Enter Task Name"
@@ -106,6 +117,7 @@ class ToDoHeader: BaseCell {
         addSubview(toDoTextField)
         addSubview(addTaskButton)
         
+        addTaskButton.addTarget(self, action: #selector(ToDoHeader.addTask), for: .touchUpInside)
         // add horizontal constraints to label
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-8-[v0]-[v1(80)]-8-|", options: NSLayoutFormatOptions(), metrics: nil,
                                                       views: [
@@ -113,10 +125,15 @@ class ToDoHeader: BaseCell {
                                                         "v1": addTaskButton
             ]))
         // add vertical constraints
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-8-[v0]-8-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": toDoTextField]))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-24-[v0]-24-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": toDoTextField]))
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-8-[v0]-8-|", options: NSLayoutFormatOptions(), metrics: nil, views: [
             "v0": addTaskButton
             ]))
+    }
+    
+    func addTask() {
+        viewController?.addNewTask(taskName: toDoTextField.text!)
+        toDoTextField.text = ""
     }
 }
 
