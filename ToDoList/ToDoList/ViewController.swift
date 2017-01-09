@@ -19,6 +19,8 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         
         // register the cell class
         collectionView?.register(ToDoCell.self, forCellWithReuseIdentifier: "cellID")
+        // register the collectionView header
+        collectionView?.register(ToDoHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "headerID")
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -34,10 +36,18 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: 50)
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerID", for: indexPath)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.width, height: 100)
+    }
 
 }
 
-class ToDoCell: UICollectionViewCell {
+class BaseCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUpViews()
@@ -47,6 +57,16 @@ class ToDoCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    func setUpViews() {
+   
+    }
+
+}
+
+class ToDoCell: BaseCell {
+   
+    
     let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Sample Task"
@@ -55,7 +75,7 @@ class ToDoCell: UICollectionViewCell {
         return label
     }()
     
-    func setUpViews() {
+    override func setUpViews() {
         addSubview(nameLabel)
         
         // add horizontal constraints to label
@@ -65,6 +85,40 @@ class ToDoCell: UICollectionViewCell {
     }
 }
 
+class ToDoHeader: BaseCell {
+    
+    let toDoTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Enter Task Name"
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.borderStyle = .roundedRect
+        return textField
+    }()
+    
+    let addTaskButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Add Task", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    override func setUpViews() {
+        addSubview(toDoTextField)
+        addSubview(addTaskButton)
+        
+        // add horizontal constraints to label
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-8-[v0]-[v1(80)]-8-|", options: NSLayoutFormatOptions(), metrics: nil,
+                                                      views: [
+                                                        "v0": toDoTextField,
+                                                        "v1": addTaskButton
+            ]))
+        // add vertical constraints
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-8-[v0]-8-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": toDoTextField]))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-8-[v0]-8-|", options: NSLayoutFormatOptions(), metrics: nil, views: [
+            "v0": addTaskButton
+            ]))
+    }
+}
 
 
 
